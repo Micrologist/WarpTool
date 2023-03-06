@@ -20,11 +20,24 @@ namespace WarpTo
 		private GUISkin skin;
 		private GUIStyle windowStyle;
 		private GUIStyle closeBtnStyle;
+		private GUIStyle scrollViewStyle;
 		private bool showGUI;
 		private Rect mainGuiRect;
 		private Rect closeBtnRect;
 		private VesselComponent activeVessel;
 		private readonly float windowWidth = 250;
+		private Vector2 targetScrollPosition = new();
+
+		private List<string> warpTargetStrings = new()
+		{
+			"Apoapsis",
+			"Periapsis",
+			"Maneuver Node",
+			"SOI Transition"
+		};
+
+		private string warpTarget = "Apoapsis";
+		private bool isSelectingWarpTarget;
 
 		public override void OnInitialized()
 		{
@@ -44,6 +57,12 @@ namespace WarpTo
 
 			mainGuiRect = new(Screen.width * 0.5f, Screen.height * 0.2f, 0, 0);
 			closeBtnRect = new Rect(windowWidth - 23, 6, 16, 16);
+
+			scrollViewStyle = new GUIStyle(skin.scrollView)
+			{
+				border = new(0,0,0,0),
+				fixedWidth = 138
+			};
 
 			Appbar.RegisterAppButton(
 					"Warp To",
@@ -70,7 +89,7 @@ namespace WarpTo
 				FillGUI,
 				"<color=#696DFF>// WARP TO</color>",
 				windowStyle,
-				GUILayout.Height(0)
+				GUILayout.Height(300)
 			);
 			mainGuiRect.position = ClampToScreen(mainGuiRect.position, mainGuiRect.size);
 
@@ -89,6 +108,31 @@ namespace WarpTo
 			GUILayout.Label("Warp to Apoapsis");
 			if (GUILayout.Button("Click me")) WarpToApoapsis();
 			GUILayout.EndHorizontal();
+
+			GUILayout.BeginHorizontal();
+			GUILayout.Label("Warp to ");
+			if (isSelectingWarpTarget)
+			{
+				GUILayout.BeginVertical(scrollViewStyle);
+				targetScrollPosition = GUILayout.BeginScrollView(targetScrollPosition, false, false, GUILayout.Width(138));
+				foreach (string targetName in warpTargetStrings)
+				{
+					if (GUILayout.Button(targetName, GUILayout.Width(130)))
+					{
+						warpTarget = targetName;
+						isSelectingWarpTarget = false;
+					}
+				}
+				GUILayout.EndScrollView();
+				GUILayout.EndVertical();
+			}
+			else
+			{
+				isSelectingWarpTarget = GUILayout.Button(warpTarget);
+				GUILayout.Space(1);
+			}
+			GUILayout.EndHorizontal();
+
 
 			GUI.DragWindow(new Rect(0, 0, 1000, 1000));
 		}
