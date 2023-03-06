@@ -1,0 +1,13 @@
+{
+    "mod_id": "warp_to",
+    "author": "Micrologist",
+    "name": "Warp To",
+    "description": "Auto timewarp",
+    "source": "https://github.com/Micrologist/WarpTo",
+    "version": "0.0.1",
+    "dependencies": ["SpaceWarp"],
+    "ksp2_version": {
+        "min": "0.1.0",
+        "max": "0.1.0"
+    }
+}
