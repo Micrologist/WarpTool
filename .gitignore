@@ -14,11 +14,11 @@ x86/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
-WarpToProject/[Bb]in/
+WarpToolProject/[Bb]in/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
-WarpToProject/.vs
-WarpToProject/.vs/*
+WarpToolProject/.vs
+WarpToolProject/.vs/*
 /Staging/CopyStagingToGame.bat
 *.bat

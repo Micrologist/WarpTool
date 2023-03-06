@@ -11,11 +11,11 @@ using SpaceWarp.API.UI;
 using SpaceWarp.API.UI.Appbar;
 using UnityEngine;
 
-namespace WarpTo
+namespace WarpTool
 {
-	[BepInPlugin("com.micrologist.warpto", "WarpTo", "0.0.1")]
+	[BepInPlugin("com.micrologist.warptool", "WarpTool", "0.0.1")]
 	[BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
-	public class WarpToMod : BaseSpaceWarpPlugin
+	public class WarpToolMod : BaseSpaceWarpPlugin
 	{
 		private GUISkin skin;
 		private GUIStyle windowStyle;
@@ -74,7 +74,7 @@ namespace WarpTo
 
 		private void Start()
 		{
-			new Harmony("warptopatch").PatchAll();
+			new Harmony("warptoolpatch").PatchAll();
 		}
 
 		private void OnGUI()
@@ -87,7 +87,7 @@ namespace WarpTo
 				GUIUtility.GetControlID(FocusType.Passive),
 				mainGuiRect,
 				FillGUI,
-				"<color=#696DFF>// WARP TO</color>",
+				"<color=#696DFF>// WARP TOOL</color>",
 				windowStyle,
 				GUILayout.Height(300)
 			);
@@ -111,10 +111,10 @@ namespace WarpTo
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Label("Warp to ");
+			GUILayout.BeginVertical(scrollViewStyle);
+			targetScrollPosition = GUILayout.BeginScrollView(targetScrollPosition, false, false, GUILayout.Width(138), GUILayout.Height(0), GUILayout.ExpandHeight(true));
 			if (isSelectingWarpTarget)
 			{
-				GUILayout.BeginVertical(scrollViewStyle);
-				targetScrollPosition = GUILayout.BeginScrollView(targetScrollPosition, false, false, GUILayout.Width(138));
 				foreach (string targetName in warpTargetStrings)
 				{
 					if (GUILayout.Button(targetName, GUILayout.Width(130)))
@@ -123,14 +123,13 @@ namespace WarpTo
 						isSelectingWarpTarget = false;
 					}
 				}
-				GUILayout.EndScrollView();
-				GUILayout.EndVertical();
 			}
 			else
 			{
 				isSelectingWarpTarget = GUILayout.Button(warpTarget);
-				GUILayout.Space(1);
 			}
+			GUILayout.EndScrollView();
+			GUILayout.EndVertical();
 			GUILayout.EndHorizontal();
 
 
