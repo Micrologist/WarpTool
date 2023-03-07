@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace WarpTool
 {
-	[BepInPlugin("com.micrologist.warptool", "WarpTool", "0.0.1")]
+	[BepInPlugin("com.micrologist.warptool", "WarpTool", "0.1.0")]
 	[BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
 	public class WarpToolMod : BaseSpaceWarpPlugin
 	{
