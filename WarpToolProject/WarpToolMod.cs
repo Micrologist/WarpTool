@@ -35,6 +35,9 @@ namespace WarpTool
 		private double warpTargetTimeTo = 0;
 		private int leadTimeInput = 1;
 		private double leadTime;
+		private double autoWarpUT = 0;
+
+		private bool isAutowarping = false;
 
 		private readonly List<string> warpTargetStrings = new()
 		{
@@ -110,6 +113,8 @@ namespace WarpTool
 			if (!showGUI || activeVessel == null) return;
 
 			UpdateTimeToSelected();
+			if (isAutowarping)
+				HandleWarp();
 
 			GUI.skin = skin;
 			mainGuiRect = GUILayout.Window(
@@ -181,21 +186,49 @@ namespace WarpTool
 			GUILayout.Space(10);
 
 			GUILayout.BeginHorizontal();
-			if (GUILayout.Button("Warp"))
-				Warp();
+			if (!isAutowarping)
+			{
+				if (GUILayout.Button("Warp"))
+					StartAutoWarp();
+			}
+			else
+			{
+				if (GUILayout.Button("Cancel"))
+					StopAutoWarp();
+			}
 			GUILayout.EndHorizontal();
 
 			GUI.DragWindow(new Rect(0, 0, 1000, 1000));
 		}
 
-		private void Warp()
+		private void HandleWarp()
 		{
-			UpdateTimeToSelected();
-			if(warpTargetTimeTo - leadTime > 10)
+			var timeWarp = GameManager.Instance.Game.ViewController.TimeWarp;
+			if(isAutowarping && !timeWarp.IsWarping && autoWarpUT - currentUT > 10)
 			{
-				var timeWarp = GameManager.Instance.Game.ViewController.TimeWarp;
 				timeWarp.WarpTo(warpTargetUT - leadTime);
 			}
+			else if (autoWarpUT - currentUT <= 10)
+			{
+				isAutowarping = false;
+				GameManager.Instance.Game.ViewController.TimeWarp.StopTimeWarp(true);
+			}
+		}
+
+		private void StartAutoWarp()
+		{
+			isAutowarping = true;
+			UpdateTimeToSelected();
+			GameManager.Instance.Game.ViewController.TimeWarp.StopTimeWarp(true);
+			autoWarpUT = warpTargetUT - leadTime;
+			HandleWarp();
+		}
+
+
+		private void StopAutoWarp()
+		{
+			isAutowarping = false;
+			GameManager.Instance.Game.ViewController.TimeWarp.StopTimeWarp(true);
 		}
 
 		private void UpdateTimeToSelected()

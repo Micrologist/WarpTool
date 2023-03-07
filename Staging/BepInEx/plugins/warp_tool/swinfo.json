@@ -2,9 +2,9 @@
     "mod_id": "warp_tool",
     "author": "Micrologist",
     "name": "Warp Tool",
-    "description": "Auto timewarp",
+    "description": "Warp helper with unlimited time warp",
     "source": "https://github.com/Micrologist/WarpTool",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "dependencies": ["SpaceWarp"],
     "ksp2_version": {
         "min": "0.1.0",
