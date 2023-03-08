@@ -1,8 +1,5 @@
 ﻿using BepInEx;
 using HarmonyLib;
-using KSP.Game;
-using KSP.Sim.impl;
-using KSP.Sim.Maneuver;
 using KSP.UI.Binding;
 using SpaceWarp;
 using SpaceWarp.API.Assets;
@@ -55,7 +52,7 @@ namespace WarpTool
 					"Warp Tool",
 					"BTN-WarpToBtn",
 					AssetManager.GetAsset<Texture2D>($"{SpaceWarpMetadata.ModID}/images/icon.png"),
-					delegate { showGUI = !showGUI; }
+					(bool) => showGUI = !showGUI
 			);
 		}
 
@@ -79,13 +76,13 @@ namespace WarpTool
 		{
 			if (!showGUI || !GameData.IsValid) return;
 
-			GUI.skin = Styles.mainSkin;
+			GUI.skin = Styles.MainSkin;
 			mainGuiRect = GUILayout.Window(
 				GUIUtility.GetControlID(FocusType.Passive),
 				mainGuiRect,
 				FillGUI,
 				"<color=#696DFF>// WARP TOOL</color>",
-				Styles.windowStyle,
+				Styles.WindowStyle,
 				GUILayout.Height(0)
 			);
 			Utilities.ClampWindowToScreen(ref mainGuiRect);
@@ -103,14 +100,19 @@ namespace WarpTool
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Label("Target");
+			GUILayout.BeginVertical(Styles.ScrollViewStyle);
+			GUILayout.BeginScrollView(
+				Vector2.zero,
+				false,
+				false,
+				isSelectingWarpTarget ? GUILayout.Height(28 * warpTargetStrings.Count) : GUILayout.Height(28)
+			);
 
-			GUILayout.BeginVertical(Styles.scrollViewStyle);
-			GUILayout.BeginScrollView(Vector2.zero, false, false, isSelectingWarpTarget ? GUILayout.Height(28 * warpTargetStrings.Count) : GUILayout.Height(28));
 			if (isSelectingWarpTarget)
 			{
 				foreach (string targetName in warpTargetStrings)
 				{
-					if (GUILayout.Button(targetName, Styles.scrollViewButtonStyle))
+					if (GUILayout.Button(targetName, Styles.ScrollViewButtonStyle))
 					{
 						warpTarget = targetName;
 						isSelectingWarpTarget = false;
@@ -119,7 +121,7 @@ namespace WarpTool
 			}
 			else
 			{
-				isSelectingWarpTarget = GUILayout.Button(warpTarget, Styles.scrollViewButtonStyle);
+				isSelectingWarpTarget = GUILayout.Button(warpTarget, Styles.ScrollViewButtonStyle);
 			}
 			GUILayout.EndScrollView();
 			GUILayout.EndVertical();
@@ -141,7 +143,6 @@ namespace WarpTool
 			GUILayout.Label($"{Utilities.SecondsToTimeString(leadTime, false)}s");
 			GUILayout.EndHorizontal();
 
-			
 			GUILayout.BeginHorizontal();
 			leadTimeInput = (int)GUILayout.HorizontalSlider(leadTimeInput, 0, 60);
 			GUILayout.EndHorizontal();
@@ -193,7 +194,7 @@ namespace WarpTool
 
 		private bool CloseButton()
 		{
-			return GUI.Button(closeBtnRect, "x", Styles.closeBtnStyle);
+			return GUI.Button(closeBtnRect, "x", Styles.CloseBtnStyle);
 		}
 
 		private void CloseWindow()

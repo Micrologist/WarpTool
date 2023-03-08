@@ -8,7 +8,6 @@ namespace WarpTool
 	{
 		public static bool IsValid { get; private set; }
 		public static double UT { get; private set; }
-
 		public static double previousUT { get; private set; }
 		public static VesselComponent ActiveVessel { get; private set; }
 		public static PatchedConicsOrbit CurrentOrbit { get; private set; }
@@ -25,6 +24,7 @@ namespace WarpTool
 				return;
 
 			ActiveVessel = game.ViewController?.GetActiveVehicle(true)?.GetSimVessel(true);
+
 			if (ActiveVessel == null)
 				return;
 

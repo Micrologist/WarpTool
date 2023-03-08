@@ -1,19 +1,13 @@
-﻿using KSP.Game;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WarpTool
+﻿namespace WarpTool
 {
 	internal static class AutoWarper
 	{
-		
 		public static bool IsWarping { get; private set; }
 		private static double targetUT;
 
 		public static void Update()
 		{
-			if(IsWarping && GameData.UT < GameData.previousUT)
+			if (IsWarping && GameData.UT < GameData.previousUT)
 			{
 				StopWarp();
 			}

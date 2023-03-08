@@ -1,42 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace WarpTool
 {
 	internal static class Styles
 	{
-		public static GUISkin mainSkin;
-		public static GUIStyle windowStyle;
-		public static GUIStyle closeBtnStyle;
-		public static GUIStyle scrollViewStyle;
-		public static GUIStyle scrollViewButtonStyle;
+		public static GUISkin MainSkin { get; private set; }
+		public static GUIStyle WindowStyle { get; private set; }
+		public static GUIStyle CloseBtnStyle { get; private set; }
+		public static GUIStyle ScrollViewStyle { get; private set; }
+		public static GUIStyle ScrollViewButtonStyle { get; private set; }
 
 		public static void Initialize(GUISkin baseSkin, float windowWidth)
 		{
-			mainSkin = baseSkin;
+			MainSkin = baseSkin;
 
-			windowStyle = new GUIStyle(mainSkin.window)
+			WindowStyle = new GUIStyle(MainSkin.window)
 			{
 				padding = new RectOffset(8, 8, 20, 8),
 				contentOffset = new Vector2(0, -22),
 				fixedWidth = windowWidth
 			};
 
-			closeBtnStyle = new GUIStyle(mainSkin.button)
+			CloseBtnStyle = new GUIStyle(MainSkin.button)
 			{
 				fontSize = 8
 			};
 
-			scrollViewStyle = new GUIStyle(mainSkin.scrollView)
+			ScrollViewStyle = new GUIStyle(MainSkin.scrollView)
 			{
 				border = new RectOffset(0, 0, 0, 0),
 				fixedWidth = 138,
 				margin = new RectOffset(4, 4, 4, 4)
 			};
 
-			scrollViewButtonStyle = new GUIStyle(mainSkin.button)
+			ScrollViewButtonStyle = new GUIStyle(MainSkin.button)
 			{
 				margin = new RectOffset(0, 0, 0, 0)
 			};
