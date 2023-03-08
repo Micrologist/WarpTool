@@ -40,7 +40,7 @@ namespace WarpTool
 		private bool isSelectingWarpTarget;
 		private double warpTargetUT = 0;
 		private double warpTargetTimeTo = 0;
-		private int leadTimeInput = 1;
+		private int leadTimeInput = 3;
 		private double leadTime;
 
 

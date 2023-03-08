@@ -18,7 +18,7 @@ namespace WarpTool
 				GameData.TimeWarp.CancelAutoWarp();
 				GameData.TimeWarp.WarpTo(targetUT);
 			}
-			else if (IsWarping && targetUT - GameData.UT <= 0)
+			else if (IsWarping && targetUT - GameData.UT <= 1)
 			{
 				IsWarping = false;
 				GameData.TimeWarp.CancelAutoWarp();
