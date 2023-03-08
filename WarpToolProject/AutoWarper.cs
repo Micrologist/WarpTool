@@ -13,6 +13,11 @@ namespace WarpTool
 
 		public static void Update()
 		{
+			if(IsWarping && GameData.UT < GameData.previousUT)
+			{
+				StopWarp();
+			}
+
 			if (IsWarping && !GameData.TimeWarp.IsWarping && targetUT - GameData.UT > 10)
 			{
 				GameData.TimeWarp.CancelAutoWarp();
@@ -20,9 +25,7 @@ namespace WarpTool
 			}
 			else if (IsWarping && targetUT - GameData.UT <= 1)
 			{
-				IsWarping = false;
-				GameData.TimeWarp.CancelAutoWarp();
-				GameData.TimeWarp.StopTimeWarp(true);
+				StopWarp();
 			}
 		}
 
