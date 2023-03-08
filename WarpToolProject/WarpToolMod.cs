@@ -64,12 +64,11 @@ namespace WarpTool
 		private void Update()
 		{
 			GameData.UpdateState();
-			if (!GameData.IsValid)
+			if (GameData.IsValid)
 			{
-				return;
+				UpdateTimes();
+				AutoWarper.Update();
 			}
-			UpdateTimes();
-			AutoWarper.Update();
 		}
 
 		private void OnGUI()
